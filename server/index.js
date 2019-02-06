@@ -3,14 +3,24 @@ require('dotenv').config();
 const express = require('express'),
   bodyParser = require('body-parser'),
   massive = require('massive'),
-  app = express(),
+  documents = require('./lib/documents');
+
+const app = express(),
   { CONNECTION_STRING, PORT } = process.env;
 
 app.use(bodyParser.json());
 
 // ##### SESSIONS #####
 
-// ##### ENDPOINTS #####
+// ##### DOCUMENT ENDPOINTS #####
+app.get('/api/:user', documents.getUser);
+app.get('/api/:users/:image', documents.getImage);
+
+// ##### COLLECTION ENDPOINTS #####
+app.get('/api/users');
+app.get('/api/:user/images');
+
+// ##### CONTROLLER ENDPOINTS #####
 
 massive(CONNECTION_STRING)
   .then(function(dbInstance) {
