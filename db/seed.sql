@@ -1,56 +1,56 @@
 DROP TABLE IF EXISTS followers;
-DROP TABLE IF EXISTS imageLikes;
-DROP TABLE IF EXISTS commentLikes;
-DROP TABLE IF EXISTS imageComments;
+DROP TABLE IF EXISTS image_likes;
+DROP TABLE IF EXISTS comment_likes;
+DROP TABLE IF EXISTS image_comments;
 DROP TABLE IF EXISTS images;
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users 
 (
   id SERIAL PRIMARY KEY,
-  profileImageUrl TEXT NOT NULL,
+  profile_image_url TEXT NOT NULL,
   username TEXT NOT NULL,
   email TEXT NOT NULL,
   password TEXT NOT NULL,
   salt TEXT NOT NULL,
-  firstName TEXT NOT NULL,
-  lastName TEXT NOT NULL
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL
 );
 
 CREATE TABLE followers 
 (
   id SERIAL PRIMARY KEY,
-  userId INTEGER REFERENCES users(id),
-  followerId INTEGER
+  user_id INTEGER REFERENCES users(id),
+  follower_id INTEGER
 );
 
 CREATE TABLE images 
 (
   id SERIAL PRIMARY KEY,
-  userId INTEGER REFERENCES users(id),
+  user_id INTEGER REFERENCES users(id),
   url TEXT
 );  
 
-CREATE TABLE imageLikes 
+CREATE TABLE image_likes 
 (
   id SERIAL PRIMARY KEY,
-  userId INTEGER REFERENCES users(id),
-  imageId INTEGER REFERENCES images(id)
+  user_id INTEGER REFERENCES users(id),
+  image_id INTEGER REFERENCES images(id)
 );  
 
-CREATE TABLE imageComments 
+CREATE TABLE image_comments 
 (
   id SERIAL PRIMARY KEY,
-  userId INTEGER REFERENCES users(id),
-  imageId INTEGER REFERENCES images(id),
+  user_id INTEGER REFERENCES users(id),
+  image_id INTEGER REFERENCES images(id),
   comment TEXT
 );  
 
-CREATE TABLE commentLikes 
+CREATE TABLE comment_likes 
 (
   id SERIAL PRIMARY KEY,
-  userId INTEGER REFERENCES users(id),
-  imageCommentId INTEGER REFERENCES imageComments(id)
+  user_id INTEGER REFERENCES users(id),
+  image_comment_id INTEGER REFERENCES image_comments(id)
 ); 
 
 
