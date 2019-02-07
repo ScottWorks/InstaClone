@@ -13,8 +13,14 @@ massive(CONNECTION_STRING).then(function(db) {
       .then(function(fakeUsers) {
         Promise.all(seedUsersTable(db, fakeUsers)).then(function(users) {
           Promise.all(seedFollowersTable(db, users)).then(function() {
-            Promise.all(seedImagesTable(db, users)).then(function(derp) {
-              console.log(derp);
+            Promise.all(seedImagesTable(db, users)).then(function() {
+              db.query('select * from images').then(function(images) {
+                Promise.all(seedImageLikesTable(db, images)).then(function(
+                  butter
+                ) {
+                  console.log(butter);
+                });
+              });
             });
           });
         });
@@ -22,15 +28,42 @@ massive(CONNECTION_STRING).then(function(db) {
   });
 });
 
+function seedImageLikesTable(db, images) {
+  var promises = [];
+
+  images.forEach(function(image) {
+    let numberOfLikes = Math.floor(Math.random() * userCount),
+      randomUsers = [];
+
+    while (numberOfLikes > 0) {
+      let currentUser = Math.floor(Math.random() * userCount) + 1;
+
+      if (!randomUsers.includes(currentUser)) {
+        promises.push(
+          db.imagelikes.insert({
+            userid: currentUser,
+            imageid: image.id
+          })
+        );
+      }
+
+      randomUsers.push(currentUser);
+      numberOfLikes--;
+    }
+  });
+
+  return promises;
+}
+
 function seedImagesTable(db, users) {
   var promises = [];
 
   users.forEach(function(user) {
-    var maxImages = Math.floor(Math.random() * 50),
+    var imageMax = Math.floor(Math.random() * 50),
       prevImage = [];
 
-    while (maxImages > 0) {
-      let imageIdx = Math.floor(Math.random() * maxImages);
+    while (imageMax > 0) {
+      let imageIdx = Math.floor(Math.random() * 10);
 
       if (!prevImage.includes(imageIdx)) {
         promises.push(
@@ -43,7 +76,7 @@ function seedImagesTable(db, users) {
         prevImage.push(imageIdx);
       }
 
-      maxImages--;
+      imageMax--;
     }
   });
 
