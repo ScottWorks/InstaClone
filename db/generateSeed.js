@@ -15,10 +15,8 @@ massive(CONNECTION_STRING).then(function(db) {
           Promise.all(seedFollowersTable(db, users)).then(function() {
             Promise.all(seedImagesTable(db, users)).then(function() {
               db.query('select * from images').then(function(images) {
-                Promise.all(seedImageLikesTable(db, images)).then(function(
-                  butter
-                ) {
-                  console.log(butter);
+                Promise.all(seedImageLikesTable(db, images)).then(function() {
+                  console.log(images);
                 });
               });
             });
@@ -31,18 +29,29 @@ massive(CONNECTION_STRING).then(function(db) {
 function seedImageLikesTable(db, images) {
   var promises = [];
 
-  images.forEach(function(image) {
-    let numberOfLikes = Math.floor(Math.random() * userCount),
+  images.forEach(function(image, idx) {
+    let numberOfLikes,
+      numberOfImages = images.length,
       randomUsers = [];
+
+    if (idx < numberOfImages * 0.05) {
+      numberOfLikes = Math.floor(Math.random() * numberOfImages) * 0.5;
+    } else if (idx > numberOfImages * 0.05 && idx <= numberOfImages * 0.6) {
+      numberOfLikes = Math.floor(Math.random() * numberOfImages) * 0.15;
+    } else if (idx > numberOfImages * 0.6 && idx <= numberOfImages * 0.85) {
+      numberOfLikes = Math.floor(Math.random() * numberOfImages) * 0.05;
+    } else if (idx > numberOfImages * 0.85) {
+      numberOfLikes = 0;
+    }
 
     while (numberOfLikes > 0) {
       let currentUser = Math.floor(Math.random() * userCount) + 1;
 
       if (!randomUsers.includes(currentUser)) {
         promises.push(
-          db.imagelikes.insert({
-            userid: currentUser,
-            imageid: image.id
+          db.image_likes.insert({
+            user_id: currentUser,
+            image_id: image.id
           })
         );
       }
@@ -68,7 +77,7 @@ function seedImagesTable(db, users) {
       if (!prevImage.includes(imageIdx)) {
         promises.push(
           db.images.insert({
-            userid: user.id,
+            user_id: user.id,
             url: imagesJSON.hits[imageIdx].largeImageURL
           })
         );
@@ -94,8 +103,8 @@ function seedFollowersTable(db, users) {
       if (!prevUserId.includes(maxFollowers) && maxFollowers !== user.id) {
         promises.push(
           db.followers.insert({
-            userid: user.id,
-            followerid: maxFollowers
+            user_id: user.id,
+            follower_id: maxFollowers
           })
         );
 
@@ -112,13 +121,13 @@ function seedFollowersTable(db, users) {
 function seedUsersTable(db, fakeUsers) {
   return fakeUsers.data.results.map(function(fakeUser) {
     return db.users.insert({
-      profileimageurl: fakeUser.picture.large,
+      profile_image_url: fakeUser.picture.large,
       username: fakeUser.login.username,
       email: fakeUser.email,
       password: fakeUser.login.password,
       salt: fakeUser.login.salt,
-      firstname: fakeUser.name.first,
-      lastname: fakeUser.name.last
+      first_name: fakeUser.name.first,
+      last_name: fakeUser.name.last
     });
   });
 }
