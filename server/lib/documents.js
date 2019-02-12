@@ -3,24 +3,24 @@ module.exports = {
     const db = req.app.get('db'),
       { user } = req.params;
 
-    db.getUser([user])
-      .then(function(userData) {
+    db.getUser([user]).then(function(userData) {
+      if (userData.length > 0) {
         res.status(200).send(userData);
-      })
-      .catch(function() {
+      } else {
         res.sendStatus(404);
-      });
-  },
-  getImage: function(req, res) {
-    const db = req.app.get('db'),
-      { user, image } = req.params;
-
-    db.getImage([user, image])
-      .then(function(image) {
-        res.status(200).send(userData);
-      })
-      .catch(function() {
-        res.sendStatus(404);
-      });
+      }
+    });
   }
+  // getImage: function(req, res) {
+  //   const db = req.app.get('db'),
+  //     { user, image } = req.params;
+
+  //   db.getImage([user, image])
+  //     .then(function(image) {
+  //       res.status(200).send(userData);
+  //     })
+  //     .catch(function() {
+  //       res.sendStatus(404);
+  //     });
+  // }
 };

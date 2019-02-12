@@ -1,25 +1,43 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import Header from './components/Header';
+import ProfileListContainer from './containers/ProfileListContainer';
+import ProfileContainer from './containers/ProfileContainer';
+import Error404 from './components/Error404';
+import { Switch, Route } from 'react-router-dom';
+import axios from 'axios';
 import './App.css';
 
 class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      users: []
+    };
+  }
+
+  componentDidMount() {
+    axios.get('/api/users').then((response) => {
+      const { data } = response;
+      this.setState({ users: data });
+    });
+  }
+
   render() {
+    const { users } = this.state;
+
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Header />
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={() => <ProfileListContainer users={users} />}
+          />
+          <Route path={'/users/:id'} component={ProfileContainer} />
+          <Route component={Error404} />
+        </Switch>
       </div>
     );
   }

@@ -3,7 +3,8 @@ require('dotenv').config();
 const express = require('express'),
   bodyParser = require('body-parser'),
   massive = require('massive'),
-  documents = require('./lib/documents');
+  documents = require('./lib/documents'),
+  collections = require('./lib/collections');
 
 const app = express(),
   { CONNECTION_STRING, PORT } = process.env;
@@ -13,12 +14,12 @@ app.use(bodyParser.json());
 // ##### SESSIONS #####
 
 // ##### DOCUMENT ENDPOINTS #####
-app.get('/api/:user', documents.getUser);
-app.get('/api/:users/:image', documents.getImage);
+app.get('/api/users/:user', documents.getUser);
+// app.get('/api/:users/:image', documents.getImage);
 
 // ##### COLLECTION ENDPOINTS #####
-app.get('/api/users');
-app.get('/api/:user/images');
+app.get('/api/users', collections.getUsers);
+// app.get('/api/:user/images');
 
 // ##### CONTROLLER ENDPOINTS #####
 
