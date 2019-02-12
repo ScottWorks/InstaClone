@@ -35,7 +35,7 @@ class App extends Component {
             path="/"
             render={() => <ProfileListContainer users={users} />}
           />
-          <Route path={'/users/:id'} component={ProfileContainer} />
+          <Route path={'/users/:username'} component={ProfileContainer} />
           <Route component={Error404} />
         </Switch>
       </div>

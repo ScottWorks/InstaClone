@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 // ##### SESSIONS #####
 
 // ##### DOCUMENT ENDPOINTS #####
-app.get('/api/users/:user', documents.getUser);
+app.get('/api/users/:username', documents.getUser);
 // app.get('/api/:users/:image', documents.getImage);
 
 // ##### COLLECTION ENDPOINTS #####

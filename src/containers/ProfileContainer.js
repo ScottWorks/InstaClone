@@ -12,10 +12,10 @@ class ProfileContainer extends Component {
   }
 
   componentDidMount() {
-    const { id } = this.props.match.params;
+    const { username } = this.props.match.params;
 
     axios
-      .get(`/api/users/${id}`)
+      .get(`/api/users/${username}`)
       .then((response) => {
         const { data } = response;
         this.setState({ user: data[0] });

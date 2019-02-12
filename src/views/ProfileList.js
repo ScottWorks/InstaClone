@@ -8,7 +8,7 @@ function ProfileList(props) {
     <div>
       {users.map((user, idx) => {
         return (
-          <Link key={idx} to={`/users/${user.id}`}>
+          <Link key={idx} to={`/users/${user.username}`}>
             <img src={user.profile_image_url} alt={user.profile_image_url} />
             <h2>{user.username}</h2>
           </Link>
