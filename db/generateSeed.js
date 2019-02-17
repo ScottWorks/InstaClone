@@ -24,13 +24,19 @@ function seedUsersTable(db, fakeUsers) {
       email: fakeUser.email,
       password: fakeUser.login.password,
       salt: fakeUser.login.salt,
-      first_name: fakeUser.name.first,
-      last_name: fakeUser.name.last,
+      first_name: capitalizeName(fakeUser.name.first),
+      last_name: capitalizeName(fakeUser.name.last),
       last_login_timestamp: generateRandomNumber(1544431245, 1550430783),
       follower_count: generateRandomNumber(0, userCount),
       following_count: generateRandomNumber(0, userCount),
       post_count: generateRandomNumber(0, 100)
     });
+  });
+}
+
+function capitalizeName(name) {
+  return name.replace(/\b[a-z]/g, function(char) {
+    return char.toUpperCase();
   });
 }
 
