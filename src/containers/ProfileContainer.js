@@ -32,20 +32,18 @@ class ProfileContainer extends Component {
     const { user } = this.state;
 
     return user ? (
-      <div>
-        Profiles
-        <StyledUserInfo user={user} />
+      <Container>
+        <UserInfo user={user} />
         {/* 
         <PhotoBarContainer />
         <PhotoGrid /> */}
-      </div>
+      </Container>
     ) : null;
   }
 }
 
-const StyledUserInfo = styled(UserInfo)`
-  ${'' /* width: 100%; */}
-  padding: 110px 0px;
-`;
-
 export default ProfileContainer;
+
+const Container = styled.div`
+  padding: 148px 16px 32px 16px;
+`;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ProfileList from '../views/ProfileList';
 import axios from 'axios';
+import styled from 'styled-components';
 
 class ProfileListContainer extends Component {
   constructor() {
@@ -26,8 +27,16 @@ class ProfileListContainer extends Component {
   render() {
     const { users } = this.state;
 
-    return users ? <ProfileList {...this.state} /> : null;
+    return users ? (
+      <Container>
+        <ProfileList {...this.state} />
+      </Container>
+    ) : null;
   }
 }
 
 export default ProfileListContainer;
+
+const Container = styled.div`
+  padding: 148px 16px 32px 16px;
+`;
