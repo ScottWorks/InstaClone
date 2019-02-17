@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import Profile from '../views/Profile';
+import UserInfo from '../views/UserInfo';
+import PhotoGrid from '../views/PhotoGrid';
+import PhotoBarContainer from './PhotoBarContainer';
 import axios from 'axios';
+import styled from 'styled-components';
 
 class ProfileContainer extends Component {
   constructor(props) {
@@ -28,8 +31,21 @@ class ProfileContainer extends Component {
   render() {
     const { user } = this.state;
 
-    return user ? <Profile user={user} /> : null;
+    return user ? (
+      <div>
+        Profiles
+        <StyledUserInfo user={user} />
+        {/* 
+        <PhotoBarContainer />
+        <PhotoGrid /> */}
+      </div>
+    ) : null;
   }
 }
+
+const StyledUserInfo = styled(UserInfo)`
+  ${'' /* width: 100%; */}
+  padding: 110px 0px;
+`;
 
 export default ProfileContainer;

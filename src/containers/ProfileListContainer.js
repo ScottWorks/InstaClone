@@ -12,10 +12,15 @@ class ProfileListContainer extends Component {
   }
 
   componentDidMount() {
-    axios.get('/api/users').then((response) => {
-      const { data } = response;
-      this.setState({ users: data });
-    });
+    axios
+      .get('/api/users')
+      .then((response) => {
+        const { data } = response;
+        this.setState({ users: data });
+      })
+      .catch(() => {
+        window.location.assign('/404');
+      });
   }
 
   render() {
