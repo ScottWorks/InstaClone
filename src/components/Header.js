@@ -13,8 +13,8 @@ function Header() {
             <Icon
               src={require('../assets/icons8-instagram-500.png')}
               alt="Home Icon"
-              height="34"
-              width="34"
+              height="24"
+              width="24"
               margin="0"
             />
           </Link>
@@ -26,20 +26,20 @@ function Header() {
           <Icon
             src={require('../assets/icons8-chat-bubble-100.png')}
             alt="Chat Icon"
-            height="34"
-            width="34"
+            height="24"
+            width="24"
           />
           <Icon
             src={require('../assets/icons8-activity-feed-100.png')}
             alt="Activity Feed Icon"
-            height="34"
-            width="34"
+            height="24"
+            width="24"
           />
           <Icon
             src={require('../assets/icons8-customer-100.png')}
             alt="Profile Icon"
-            height="34"
-            width="34"
+            height="24"
+            width="24"
           />
         </Section>
       </Container>

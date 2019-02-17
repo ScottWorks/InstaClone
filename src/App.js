@@ -1,4 +1,5 @@
 import React from 'react';
+import Footer from './components/Footer';
 import Header from './components/Header';
 import ProfileListContainer from './containers/ProfileListContainer';
 import ProfileContainer from './containers/ProfileContainer';
@@ -15,6 +16,7 @@ function App() {
         <Route path={'/users/:username'} component={ProfileContainer} />
         <Route component={Error404} />
       </Switch>
+      <Footer />
     </div>
   );
 }

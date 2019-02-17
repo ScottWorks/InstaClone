@@ -3,11 +3,8 @@ module.exports = {
     const db = req.app.get('db'),
       { username } = req.params;
 
-    console.log(req.params);
-
     db.getUser([username]).then(function(userData) {
       if (userData.length > 0) {
-        console.log(userData);
         res.status(200).send(userData);
       } else {
         res.sendStatus(404);

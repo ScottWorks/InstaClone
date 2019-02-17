@@ -1,7 +1,9 @@
 import React from 'react';
+import { Button } from '../components/Button';
+import { Icon } from '../components/Icon';
 import { Image } from '../components/Image';
 import { Section } from '../components/Section';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 function Profile(props) {
   const { user } = props;
@@ -13,16 +15,49 @@ function Profile(props) {
           circular
           avatar
           src={user.profile_image_url}
-          alt={user.profile_image_url}
+          alt="Profile Picture"
         />
       </Section>
-      <Section margin="0px 0px 0px 80px">
-        <div>
-          <h2>{user.username}</h2>
-        </div>
-        <h2>
-          {user.first_name} {user.last_name}
-        </h2>
+      <Section width="450px" margin="0px 0px 0px 80px">
+        <Row>
+          <Col marginRight="20px" fontWeight="300" fontSize="28px">
+            {user.username}
+          </Col>
+          <Col flex marginRight="10px">
+            <a>
+              <Button height="30px" type="button">
+                Edit Profile
+              </Button>
+            </a>
+          </Col>
+          <Col flex>
+            <Icon
+              src={require('../assets/icons8-settings-100.png')}
+              alt="Settings Icon"
+              height="28"
+              width="28"
+              margin="0"
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <b>{user.post_count}</b> posts
+          </Col>
+          <Col>
+            <b>{user.follower_count}</b> followers
+          </Col>
+          <Col>
+            <b>{user.following_count}</b> following
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <b>
+              {user.first_name} {user.last_name}
+            </b>
+          </Col>
+        </Row>
       </Section>
     </Container>
   );
@@ -34,4 +69,26 @@ const Container = styled.div`
   display: flex;
   max-width: 1010px;
   margin: 0 auto;
+`;
+
+const Row = styled.div`
+  display: flex;
+  width: 100%;
+`;
+
+const Col = styled.div`
+  font-size: ${(props) => props.fontSize};
+  font-weight: ${(props) => props.fontWeight};
+  margin-top: ${(props) => props.marginTop || '0px'};
+  margin-right: ${(props) => props.marginRight || '40px'};
+  margin-bottom: ${(props) => props.marginBottom || '20px'};
+  margin-left: ${(props) => props.marginLeft || '0px'};
+
+  ${(props) =>
+    props.flex &&
+    css`
+      display: flex;
+      align-items: center;
+      justify-contents: center;
+    `};
 `;
