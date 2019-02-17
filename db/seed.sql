@@ -14,26 +14,32 @@ CREATE TABLE users
   password TEXT NOT NULL,
   salt TEXT NOT NULL,
   first_name TEXT NOT NULL,
-  last_name TEXT NOT NULL
+  last_name TEXT NOT NULL,
+  last_login_timestamp INTEGER NOT NULL,
+  follower_count INTEGER NOT NULL,
+  following_count INTEGER NOT NULL,
+  post_count INTEGER NOT NULL
 );
 
 CREATE TABLE followers 
 (
   id SERIAL PRIMARY KEY,
   user_id INTEGER REFERENCES users(id),
-  follower_id INTEGER
+  follower_id INTEGER NOT NULL
 );
 
 CREATE TABLE images 
 (
   id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES users(id),
-  url TEXT
+  url TEXT NOT NULL,
+  timestamp INTEGER NOT NULL,
+  user_id INTEGER REFERENCES users(id)
 );  
 
 CREATE TABLE image_likes 
 (
   id SERIAL PRIMARY KEY,
+  timestamp INTEGER NOT NULL,
   user_id INTEGER REFERENCES users(id),
   image_id INTEGER REFERENCES images(id)
 );  
@@ -41,14 +47,16 @@ CREATE TABLE image_likes
 CREATE TABLE image_comments 
 (
   id SERIAL PRIMARY KEY,
+  comment TEXT NOT NULL,
+  timestamp INTEGER NOT NULL,
   user_id INTEGER REFERENCES users(id),
-  image_id INTEGER REFERENCES images(id),
-  comment TEXT
+  image_id INTEGER REFERENCES images(id)
 );  
 
 CREATE TABLE comment_likes 
 (
   id SERIAL PRIMARY KEY,
+  timestamp INTEGER NOT NULL,
   user_id INTEGER REFERENCES users(id),
   image_comment_id INTEGER REFERENCES image_comments(id)
 ); 
