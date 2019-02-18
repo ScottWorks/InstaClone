@@ -33,10 +33,11 @@ class ProfileContainer extends Component {
 
     return user ? (
       <Container>
-        <UserInfo user={user} />
-        {/* 
-        <PhotoBarContainer />
-        <PhotoGrid /> */}
+        <Section>
+          <UserInfo user={user} />
+          <PhotoBarContainer />
+          <PhotoGrid />
+        </Section>
       </Container>
     ) : null;
   }
@@ -45,5 +46,12 @@ class ProfileContainer extends Component {
 export default ProfileContainer;
 
 const Container = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const Section = styled.section`
+  width: 100%;
+  max-width: 1010px;
   padding: 148px 16px 32px 16px;
 `;

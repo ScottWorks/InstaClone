@@ -39,7 +39,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: space-between;
   margin: 0 auto;
-  max-width: 935px;
+  max-width: 1010px;
 `;
 
 const Link = styled.a`

@@ -24,18 +24,16 @@ function Profile(props) {
             {user.username}
           </Col>
           <Col flex marginRight="10px">
-            <a>
-              <Button height="30px" type="button">
-                Edit Profile
-              </Button>
-            </a>
+            <Button height="30px" type="button">
+              Edit Profile
+            </Button>
           </Col>
           <Col flex>
             <Icon
               src={require('../assets/icons8-settings-100.png')}
               alt="Settings Icon"
-              height="28"
-              width="28"
+              height="28px"
+              width="28px"
               margin="0"
             />
           </Col>
@@ -67,8 +65,6 @@ export default Profile;
 
 const Container = styled.div`
   display: flex;
-  max-width: 1010px;
-  margin: 0 auto;
 `;
 
 const Row = styled.div`
