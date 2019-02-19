@@ -10,33 +10,51 @@ class ProfileContainer extends Component {
     super(props);
 
     this.state = {
-      user: null
+      activePhotoGrid: 'posts',
+      user: null,
+      posts: [],
+      saved: [],
+      tagged: []
     };
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     const { username } = this.props.match.params;
 
-    axios
-      .get(`/api/users/${username}`)
-      .then((response) => {
-        const { data } = response;
-        this.setState({ user: data[0] });
-      })
-      .catch(() => {
-        window.location.assign('/404');
+    const userInfo = axios.get(`/api/users/${username}`).catch(function() {
+      window.location.assign('/404');
+    });
+
+    const images = axios.get(`/api/${username}/images`).catch(function() {
+      window.location.assign('/500');
+    });
+
+    Promise.all([userInfo, images]).then((response) => {
+      this.setState({
+        user: response[0].data[0],
+        posts: response[1].data
       });
-  }
+    });
+
+    // asynchrously fetch saved and tagged posts after fetching user info and posts...
+  };
+
+  handlePhotoBarChange = () => {
+    // updates photo grid according to currrent selection
+  };
 
   render() {
-    const { user } = this.state;
+    var activePhotos;
+    const { activePhotoGrid, user, posts } = this.state;
+
+    if (activePhotoGrid === 'posts') activePhotos = posts;
 
     return user ? (
       <Container>
         <Section>
           <UserInfo user={user} />
           <PhotoBarContainer />
-          <PhotoGrid />
+          <PhotoGrid activePhotos={activePhotos} />
         </Section>
       </Container>
     ) : null;

@@ -19,7 +19,7 @@ app.get('/api/users/:username', documents.getUser);
 
 // ##### COLLECTION ENDPOINTS #####
 app.get('/api/users', collections.getUsers);
-// app.get('/api/:user/images');
+app.get('/api/:user/images', collections.getImages);
 
 // ##### CONTROLLER ENDPOINTS #####
 

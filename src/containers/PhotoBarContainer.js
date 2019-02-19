@@ -15,5 +15,5 @@ class PhotoBarContainer extends Component {
 export default PhotoBarContainer;
 
 const Container = styled.div`
-  padding: 48px 0px 10px 0px;
+  padding-top: 48px;
 `;
