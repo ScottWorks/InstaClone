@@ -1,7 +1,7 @@
 require('dotenv').config();
 const axios = require('axios'),
   massive = require('massive'),
-  // imagesJSON = require('../assets/images.json'),
+  imagesJSON = require('../assets/images.json'),
   { CONNECTION_STRING } = process.env;
 
 var userCount = 1000;
@@ -26,7 +26,10 @@ function seedUsersTable(db, fakeUsers) {
       salt: fakeUser.login.salt,
       first_name: capitalizeName(fakeUser.name.first),
       last_name: capitalizeName(fakeUser.name.last),
-      last_login_timestamp: generateRandomNumber(1544431245, 1550430783),
+      last_login_timestamp: generateRandomNumber(
+        1544431245,
+        Math.floor(Date.now() / 1000)
+      ),
       follower_count: generateRandomNumber(0, userCount),
       following_count: generateRandomNumber(0, userCount),
       post_count: generateRandomNumber(0, 100)
@@ -45,6 +48,21 @@ function generateRandomNumber(min, max) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min;
 }
+
+module.exports = {
+  generateImageArray: function() {
+    console.log(
+      imagesJSON.hits.map((image, index) => ({
+        id: index + 1,
+        url: image.largeImageURL,
+        timestamp: generateRandomNumber(
+          1544431245,
+          Math.floor(Date.now() / 1000)
+        )
+      }))
+    );
+  }
+};
 
 // massive(CONNECTION_STRING).then(function(db) {
 //   db.seed().then(function() {
