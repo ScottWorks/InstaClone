@@ -33,6 +33,8 @@ CREATE TABLE images
   id SERIAL PRIMARY KEY,
   url TEXT NOT NULL,
   timestamp INTEGER NOT NULL,
+  like_count INTEGER NOT NULL,
+  comment_count INTEGER NOT NULL,
   user_id INTEGER REFERENCES users(id)
 );  
 
