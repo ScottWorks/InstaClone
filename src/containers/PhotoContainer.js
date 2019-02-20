@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PhotoPreviewContainer from '../containers/PhotoPreviewContainer';
-import PhotoOverlay from '../views/PhotoOverlay';
+import { Icon } from '../components/Icon';
 import { Image as Photo } from '../components/Image';
 import styled from 'styled-components';
 
@@ -18,6 +18,7 @@ class PhotoContainer extends Component {
     e.preventDefault();
     const { mouseOver } = this.state;
 
+    console.log(mouseOver);
     this.setState({
       mouseOver: !mouseOver
     });
@@ -33,20 +34,36 @@ class PhotoContainer extends Component {
   };
 
   render() {
-    const { open, mouseOver } = this.state;
-    // { photo } = this.props;
+    const { open } = this.state,
+      { photo } = this.props;
 
     return (
       <Container>
         <Photo
-          className="photo"
           src={require('../assets/blue-pitbull-puppy.jpg')}
           alt="Photo"
           onMouseEnter={this.handleMouseOver}
           onMouseLeave={this.handleMouseOver}
           onClick={this.handleClick}
         />
-        {mouseOver ? <PhotoOverlay /> : null}
+        <Overlay>
+          <Icon
+            src={require('../assets/icons8-heart-100.png')}
+            alt="Like Icon"
+            height="24px"
+            width="24px"
+            margin="0px 8px 0px 0px"
+          />
+          {photo.likes}
+          <Icon
+            src={require('../assets/icons8-speech-bubble-filled-100.png')}
+            alt="Comment Icon"
+            height="20px"
+            width="20px"
+            margin="0px 8px 0px 32px"
+          />
+          {photo.comments.length}
+        </Overlay>
         {open ? <PhotoPreviewContainer photo /> : null}
       </Container>
     );
@@ -55,18 +72,33 @@ class PhotoContainer extends Component {
 
 export default PhotoContainer;
 
+const Overlay = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 280.33px;
+  height: 280.33px;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  font-weight: 600;
+  visibility: hidden;
+`;
+
 const Container = styled.div`
+  width: 280.33px;
+  height: 280.33px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
   margin: 10px;
   cursor: pointer;
   overflow: hidden;
-  width: 280.33px;
-  height: 280.33px;
-  background-color: #000;
+}
 
-  img {
-    transition: transform 500ms ease;
-    &:hover {
-      opacity: 0.5;
-    }
-  }
+  &:hover ${Overlay} {
+  visibility: visible;
+  padding: auto;
+}
 `;
