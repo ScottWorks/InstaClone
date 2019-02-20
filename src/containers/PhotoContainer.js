@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PhotoPreviewContainer from '../containers/PhotoPreviewContainer';
+import PhotoOverlay from '../views/PhotoOverlay';
 import { Image as Photo } from '../components/Image';
 import styled from 'styled-components';
 
@@ -16,8 +18,6 @@ class PhotoContainer extends Component {
     e.preventDefault();
     const { mouseOver } = this.state;
 
-    console.log(mouseOver);
-
     this.setState({
       mouseOver: !mouseOver
     });
@@ -27,46 +27,27 @@ class PhotoContainer extends Component {
     e.preventDefault();
     const { open } = this.state;
 
-    console.log(open);
-
     this.setState({
       open: !open
     });
   };
 
   render() {
-    const { open } = this.state,
-      { photo } = this.props;
-
-    let tileStyle = {};
-
-    if (open) {
-      tileStyle = {
-        width: '62vw',
-        height: '62vw',
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        margin: '0',
-        marginTop: '-31vw',
-        marginLeft: '-31vw',
-        boxShadow: '0 0 40px 5px rgba(0, 0, 0, 0.3)',
-        transform: 'none'
-      };
-    } else {
-      tileStyle = {};
-    }
+    const { open, mouseOver } = this.state;
+    // { photo } = this.props;
 
     return (
       <Container>
         <Photo
-          src={photo.url}
+          className="photo"
+          src={require('../assets/blue-pitbull-puppy.jpg')}
           alt="Photo"
           onMouseEnter={this.handleMouseOver}
           onMouseLeave={this.handleMouseOver}
           onClick={this.handleClick}
-          style={tileStyle}
         />
+        {mouseOver ? <PhotoOverlay /> : null}
+        {open ? <PhotoPreviewContainer photo /> : null}
       </Container>
     );
   }
@@ -80,12 +61,12 @@ const Container = styled.div`
   overflow: hidden;
   width: 280.33px;
   height: 280.33px;
+  background-color: #000;
 
-  ${'' /* img {
-		width: 100%;
-		transition: transform 500ms ease;
-		&:hover {
-			transform: scale(1.1);
-		}
-	} */}
+  img {
+    transition: transform 500ms ease;
+    &:hover {
+      opacity: 0.5;
+    }
+  }
 `;

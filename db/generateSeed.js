@@ -58,7 +58,14 @@ module.exports = {
         timestamp: generateRandomNumber(
           1544431245,
           Math.floor(Date.now() / 1000)
-        )
+        ),
+        likes: generateRandomNumber(0, userCount),
+        comments: [
+          { user_id: 1, comment: 'Cool!' },
+          { user_id: 2, comment: 'Wow!' },
+          { user_id: 3, comment: 'Splunk!' },
+          { user_id: 4, comment: 'Derrrrrr!' }
+        ]
       }))
     );
   }

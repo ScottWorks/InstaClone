@@ -56,6 +56,7 @@ const NavBarContainer = styled.nav`
   top: 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.0975);
   overflow: hidden;
+  z-index: 1;
 `;
 
 const Container = styled.div`
